@@ -1,0 +1,8 @@
+WhereCampPDX Arrivals Board
+===========================
+
+This is an application that simulates an airport arrivals board. It is used to play an amusing little party ice-breaker game involving flight numbers.
+
+Requirements
+------------
+the *google-geocode* gem
