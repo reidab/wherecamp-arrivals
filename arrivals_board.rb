@@ -13,7 +13,7 @@ class ArrivalsBoard
     @tickets.save
   end
   
-  def arrival(number)
+  def arrival(number, origin=nil, destination=nil)
     @tickets.find_or_create_by_number(number).first.arrive
     @tickets.save
   end
