@@ -41,7 +41,7 @@ class Ticket
   #
   # yes, this is sloppy and oddly state-dependant
   #
-  def depart!
+  def depart
     if @first_departure_time.nil?
       @first_departure_time = Time.now
     else
@@ -50,7 +50,7 @@ class Ticket
   end
   
   # sets the arrival time
-  def arrive!
+  def arrive
     @arrival_time = Time.now
   end
   

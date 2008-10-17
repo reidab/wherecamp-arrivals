@@ -4,6 +4,16 @@ class TicketPool < Array
     select{ |v| v.number == number }
   end
   
+  def find_or_create_by_number(number)
+    find = find_by_number(number)
+    if find.empty? 
+      self << ticket = Ticket.new(number)
+      return [ticket]
+    else 
+      return find
+    end
+  end
+  
   def reset
     self.delete_if { |x| true }
   end
@@ -17,6 +27,7 @@ class TicketPool < Array
     file = File.new('tickets.txt','w')
     file.write Marshal.dump(self)
     file.close
+    return self
   end
 
   def load

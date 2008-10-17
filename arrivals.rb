@@ -21,9 +21,7 @@ Shoes.app(:title => "Control Panel") do
     @depart_button = button "Log Departure", :margin_top => 10
     
     @depart_button.click {
-      $board.window.app do
-        $board.stack.append { para 'test' }
-      end
+      $board.departure(@departure_number.text.to_i)
     }
           
     para("Ticket Number", :size => 10).displace(0, 13)
@@ -41,10 +39,9 @@ Shoes.app(:title => "Control Panel") do
     end
     
     button "Log Arrival", :margin_top => 10 do
-
+      $board.arrival(@arrival_number.text.to_i)
     end
-    
-    @board_debug = para $board
     
   end
 end
+
