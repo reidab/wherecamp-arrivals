@@ -6,24 +6,7 @@ require 'google_geocode'    # this is the google-geocode gem
 # each ticket object represents a pair of physical tickets 
 class Ticket
   
-  # a list of available transports
-  # we need to determine how to break
-  # these up based on velocity.
-  #
-  # listed slowest to fastest
-  Transports = [
-    'Tortoise Caravan',
-     'Palaquin',
-     'Elephant',
-     'Bicycle Rickshaw',
-     'Covered Wagon',
-     'Zeppelin',
-     'Omnibus',
-     'Steam Locomotive',
-     'Shinkansen',
-     'Concorde',
-     'Ballistic Rocket Plane'
-  ]
+
   
   attr_accessor :number                 # the ticket number
   attr_accessor :first_departure_time   # the time the first ticket is given out
@@ -74,18 +57,49 @@ class Ticket
   def distance
     return false if @origin.nil? || @destination.nil?
     
-    # TODO Calculate great circle distance between two points
+    r = 6371;
+    d_lat = (@origin.latitude - @destination.latitude) * Math::PI / 180
+    d_long = (@origin.longitude - @destination.longitude) * Math::PI / 180
+    
+    a = Math.sin(d_lat/2) * Math.sin(d_lat/2) +
+            Math.cos(@destination.latitude * Math::PI / 180) * Math.cos(@origin.latitude * Math::PI / 180) * 
+            Math.sin(d_long/2) * Math.sin(d_long/2); 
+    c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    d = r * c;
   end
   
   # calculates the velocity between origin and destination
   # based on their distance and the time between 
   # @second_departure_time and @arrival_time
   def velocity
-    # TODO calculate velocity
+    self.distance / ((@arrival_time - @second_departure_time) / 60)
   end
   
   # calculates the method of transportation based on the velocity
   def transport
-    # TODO calculate method of transport
+    case velocity
+    when 0..10
+      'Tortoise Caravan'
+    when 11..17
+       'Palanquin'
+     when 18..27
+       'Elephant'
+     when 28..40
+       'Bicycle Rickshaw'
+     when 41..56
+       'Covered Wagon'
+     when 57..75
+       'Zeppelin'
+     when 76..97
+       'Omnibus'
+     when 98..122
+       'Steam Locomotive'
+     when 123..150
+       'Shinkansen'
+     when 151..181
+       'Concorde'
+     when 181..999999
+       'Ballistic Rocket Plane'
+     end
   end
 end
